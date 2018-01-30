@@ -1,0 +1,144 @@
+* {
+	box-sizing : border-box;
+}
+
+.js-background {
+	background-image : url("https://www.visitsarasota.com/sites/default/master/files/FarmersMarketGoodShot__FallInSarasota__2017Opt.jpg"); 
+	background-repeat : no-repeat;
+	background-size : cover;
+	background-position : center;
+	height : 300px;
+	width : 600px;
+}
+
+.js-detail-bkgd {
+	background-color : lightblue;
+}
+
+.form-or {
+	display : block;
+	margin : 0 auto;
+	min-height: line-height;
+	padding-top : 10px;
+}
+
+.js-main {
+	margin : 0 auto;
+	min-width : min-content;
+}
+
+.js-detail-header {
+	padding-bottom : 40px;
+}
+
+h1 {
+	text-align : center;
+	background-color: white; 
+	border-radius : 5px;
+	font : bold 26px 'Supermercado+One', cursive, sans-serif;
+} 
+
+h2 {
+	text-align : center;
+	background-color: white; 
+	border-radius : 5px;
+	font : bold 24px 'Gloria Hallelujah', cursive, sans-serif;
+}
+
+
+fieldset {
+	display : block;
+	margin : 0 auto;
+	border-width: 3px;
+	border-color : black;
+	width : min-content;
+	background-color: white;
+}
+
+legend {
+	font-weight : bold;
+	font-size : 24px;
+	text-align : center;
+	background-color : white;
+}
+
+label {
+	display : inline-block;
+	padding : 10px 10px 0 0;
+}
+
+input {
+	display : block;
+}
+
+input[type="text"] {
+	border-color : black;
+	border-width : 2px;
+}
+
+input[type="submit"] {
+	margin-top : 10px;
+}
+
+.js-item {
+	text-decoration : none;
+	font-size : 12px;
+	display : block;
+	margin : 0 auto;
+	height : line-height;
+	padding-top : 15px;
+}
+
+.col-light {
+	background-color : #80b3ff;
+	border : 2px white groove;
+}
+
+.col-dark {
+	background-color : #0066ff;
+	border : 2px white groove;
+}
+
+.row {
+	padding : 0 40px;
+	/*display : flex;
+	flex-wrap : wrap;
+	align-content : center;
+	/* align-items : center; */
+
+}
+
+.column-3 {
+    float: left;
+    width: 33.33%;
+}
+
+.column-2 {
+    float: left;
+    width: 50%;
+    text-align : center;
+}
+
+.column-1 {
+    float: left;
+    width: 100%;
+}
+
+.column-list {
+	min-width : 280px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* for market specific page - gives space between icon and text */
+span {
+	display : inline-block;
+	margin-left : 8px;
+}
+
+

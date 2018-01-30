@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>open air markets | home</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" type="text/css" href="normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Supermercado+One" rel="stylesheet">	
+    <script src="https://developer.edamam.com/attribution/badge.js"></script>
+    <script
+		src="https://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</head>
+<body onLoad="main()">
+	<main class="js-main js-background" role="main" aria-live="assertive" >
+	    <header role="header" class="js-main-header">
+		    <h1>Welcome to Open-Air Markets!</h1>
+	    </header>
+	    <form action="" method="post" id="market-search" class="js-main-form">
+		    <fieldset>
+		        <legend>Find a Market</legend>
+		        <label>Zipcode<input type="text" name="zipcode" id="zipcode"></label><br>
+		        <p class="form-or">OR</p>
+		        <label>City, State<input type="text" name="city-state" id="city-state"></label><br>
+		        <input type="submit" value="Submit">
+		    </fieldset>	
+            <h2>Where you can find all information on your local farmers markets!</h2>  
+            <div id="edamam-badge" data-color="white" hidden></div>
+	    </form>
+    </main>
+ </body>
+</html>
