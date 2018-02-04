@@ -1,144 +1,162 @@
-* {
-	box-sizing : border-box;
+ body {
+	background-color : #DDDDDD;
+	height: 100%;
+	margin: 0;
+	padding: 5px;
+  }
+
+/* navigation bar at top */
+.nav-bar {
+  position: fixed;
+  top: 0;
+ // left: 0;
+  right: 0;
+ // padding: 10px;
+ // border-bottom: 1px solid #CCCCCC;
 }
 
-.js-background {
-	background-image : url("https://www.visitsarasota.com/sites/default/master/files/FarmersMarketGoodShot__FallInSarasota__2017Opt.jpg"); 
-	background-repeat : no-repeat;
-	background-size : cover;
-	background-position : center;
-	height : 300px;
-	width : 600px;
+.top-nav {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
-.js-detail-bkgd {
-	background-color : lightblue;
+.nav-link {
+  text-decoration: none;
+  font-size: 18px;
+  padding: 0 6px;
 }
 
-.form-or {
-	display : block;
-	margin : 0 auto;
-	min-height: line-height;
-	padding-top : 10px;
+.nav-link:hover {
+	text-decoration: underline;
 }
 
-.js-main {
-	margin : 0 auto;
-	min-width : min-content;
-}
-
-.js-detail-header {
-	padding-bottom : 40px;
+/* The image banner across the page */
+.js-banner {
+  background: url('https://www.visitsarasota.com/sites/default/master/files/FarmersMarketGoodShot__FallInSarasota__2017Opt.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position : relative;
+  height : 350px;
+  margin : 5px auto;
 }
 
 h1 {
-	text-align : center;
-	background-color: white; 
-	border-radius : 5px;
-	font : bold 26px 'Supermercado+One', cursive, sans-serif;
-} 
+	font : bold 28px 'Supermercado+One', cursive, sans-serif;
+}
 
 h2 {
-	text-align : center;
-	background-color: white; 
-	border-radius : 5px;
-	font : bold 24px 'Gloria Hallelujah', cursive, sans-serif;
+	font : bold 22px 'Supermercado+One', cursive, sans-serif;
 }
 
+/* text displayed on top of the image */
+.js-banner-text {
+	text-align : center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+    transform: translate(-50%, -50%); 
+	color : white;
+	text-shadow : 0 2px 2px black;
+}
+
+/* the search elements */
+.search-title {
+	display: inline-block;
+}
+
+.search-form {
+	display: inline-block;
+	position: relative;
+	left: 10%;
+	font : bold 16px 'Supermercado+One', sans-serif;
+}
 
 fieldset {
-	display : block;
-	margin : 0 auto;
-	border-width: 3px;
-	border-color : black;
-	width : min-content;
-	background-color: white;
-}
-
-legend {
-	font-weight : bold;
-	font-size : 24px;
-	text-align : center;
-	background-color : white;
+	border : none;
+	max-width : fit-content;
 }
 
 label {
+	padding-right : 10px;
+}
+
+.search-button {
+  display : inline-block;
+  font-size: 16px;
+  width: 37px;
+  height: auto;
+  padding: 2px 6px 2px 6px; 
+  background-color: white;
+  box-shadow: 2px 2px 0 0;
+  border-radius: 3px;
+  vertical-align : bottom;
+}
+
+.disabled-button {
+	filter: invert(60%);
+}
+
+#zipcode {
+  display: inline-block;
+  text-align: center;
+  font-family: "Supermercado+One", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 30px;
+  height: 30px; 
+  border-radius: 3px;
+}
+
+.js-error {
+	border : 1px solid red;
+}
+
+.js-err-msg {
 	display : inline-block;
-	padding : 10px 10px 0 0;
+	line-height: 0;
+	color : red;
+	padding-left: 5px;
 }
 
-input {
-	display : block;
+.js-list-title {
+    line-height: 40px;
 }
 
-input[type="text"] {
-	border-color : black;
-	border-width : 2px;
+.js-fm-text {
+  text-align: center;
 }
 
-input[type="submit"] {
-	margin-top : 10px;
+.js-cards-name, .js-cards-product {
+	font : bold 12px 'Supermercado+One', cursive, sans-serif;
 }
 
-.js-item {
-	text-decoration : none;
-	font-size : 12px;
-	display : block;
-	margin : 0 auto;
-	height : line-height;
-	padding-top : 15px;
+.js-cards-dist {
+	font : 8px 'Supermercado+One', cursive, sans-serif;
 }
 
-.col-light {
-	background-color : #80b3ff;
-	border : 2px white groove;
+td {
+	display:block;
+	clear: both;
+	margin-top: 3px;
+} 
+
+.js-cards:hover, .js-cards:focus {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
 }
 
-.col-dark {
-	background-color : #0066ff;
-	border : 2px white groove;
+#CheckBoxes {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
 }
 
-.row {
-	padding : 0 40px;
-	/*display : flex;
-	flex-wrap : wrap;
-	align-content : center;
-	/* align-items : center; */
-
+.CardBoxes, .js-address-hours, .products, .js-cards-product {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
 }
 
-.column-3 {
-    float: left;
-    width: 33.33%;
+.js-cards, .js-cards-product {
+	margin: 5px;
+	padding: 10px;
+	background-color: lightgreen;
 }
-
-.column-2 {
-    float: left;
-    width: 50%;
-    text-align : center;
-}
-
-.column-1 {
-    float: left;
-    width: 100%;
-}
-
-.column-list {
-	min-width : 280px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-/* for market specific page - gives space between icon and text */
-span {
-	display : inline-block;
-	margin-left : 8px;
-}
-
 

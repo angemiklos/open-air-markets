@@ -1,45 +1,65 @@
-var homeHeader;
-var homeFooter;
-var homeForm;
-var idResults;
-var products = [
-{ item : "Eggs", linkable : true},
-{ item : "Fresh Fruit and Vegetables", linkable : true},
-{ item : "Poultry", linkable : true},
-{ item : "Meat", linkable : true},
-{ item : "Prepared Foods", linkable : false},
-{ item : "Cheese and/or Dairy Products", linkable : true},
-{ item : "Baked Goods", linkable : true},
-{ item : "Household Items", linkable : false},
-{ item : "Soap and/or Body Care Items", linkable : false},
-{ item : "Fresh and/or Dried Herbs", linkable : true},
-{ item : "Honey", linkable : true},
-{ item : "Crafts and/or Woodworking Items", linkable : false},
-{ item : "Cut Flowers", linkable : false},
-{ item : "Canned or Preserved", linkable : true},
-{ item : "Maple Syrup and/or Products", linkable : true},
-{ item : "Nuts", linkable : true},
-{ item : "Plants in Containers", linkable : false},
-{ item : "Trees, Shrubs", linkable : false}
-];
+var marketIDs = [];
+var marketIDsIndex = -1;
+var markets = [];
+var displayIndex = -1;
+var selectedProducts = [];
+var bannerDiv;
+var searchDiv;
+var searchFilterDiv;
+var marketListDiv;
 
+const MY_EDAMAM_APP_ID = "2fa4c48e";
+const MY_EDAMAM_APP_KEY = "5f32aeea8e822b1fcf09a139329c7216";
 const MARKET_SEARCH_URL = "https://search.ams.usda.gov/farmersmarkets/v1/data.svc/";
-const RECIPE_SEARCH_URL = "https://api.edamam.com/search";
-const EDAMAM_ID = "&app_id=118e0e2d&app_key=c5eead045b6939e2524eb40298a3d91e&from=0&to=30"
+const RECIPE_SEARCH_URL = "https://api.edamam.com/";
+const EDAMAM_ID_STR = `&app_id=${MY_EDAMAM_APP_ID}&app_key=${MY_EDAMAM_APP_KEY}&from=0&to=30`;
+const USDA_ATTRITION = `<p>This product uses USDA’s National Farmers Market API but is not endorsed or certified by USDA.</p>`
+const EDAMAM_ATTRITION = `<div id="edamam-badge" data-color="white" hidden></div>`;
 
-function backToMain(){
-    // add back in the home page elements.
-    // Should not have to add the callback again.
-    $(homeHeader).appendTo('main');
-    $(homeForm).appendTo('main');
-    $(homeFooter).appendTo('main');
-    $(".js-main").addClass('js-background');
+function showMarketIDs(){
+   for (let i=0; i<marketIDs.length; i++) {
+    console.log("Item number " + i + ":");
+    console.log("id: " + marketIDs[i].id);
+    console.log("name: " + marketIDs[i].name);
+    console.log("distance: " + marketIDs[i].distance);
+   }
+}
+
+function showMarket(index){
+    console.log("Item number " + index + ":");
+    console.log("ID: " + markets[index].id);
+    console.log("name: " + markets[index].name);
+    console.log("street: " + markets[index].street);
+    console.log("cityState: " + markets[index].cityState);
+    console.log("googleLink: " + markets[index].googleLink);
+    console.log("facebookLink: " + markets[index].facebookLink);
+    console.log("hours: " + markets[index].hours);
+    console.log("products: ");
+    var items = markets[index].products;
+    for (let i=0; i<items.length; i++) {
+      console.log(items[i]);
+    }
+}
+
+// Disable the search button
+function disableButton(){
+    console.log("Entering disableButton...");
+
+  $('.search-button').attr("disabled","disabled");
+  $('.search-button').addClass("disabled-button");
+  $('.js-text').on("keypress", allowSearch );
+}
+
+
+/*
+function displayEDAMAMSearchData(){
+  console.log("Entering displayEDAMAMSearchData...");
 }
 
 // Get Recipes from Edamam API
-function getDataFromEdamamApi(searchTerm) {
+function getDataFromEdamamApi() {
   console.log("Entering getDataFromEdamamApi...");
-  const zipUrl = RECIPE_SEARCH_URL + "search?q=" + searchTerm + EDAMAM_ID;
+  const zipUrl = RECIPE_SEARCH_URL + "search?q=" + localStorage.getItem("theIngredient") + EDAMAM_ID_STR;
   console.log(`the url is: ${zipUrl}`);
   $.ajax ({
     type : "GET",
@@ -56,200 +76,283 @@ function addRecipeSubmitCB(){
   $('.recipes').submit(event => {
       console.log("Entering anonymous addRecipeSubmitCB...");
       event.preventDefault();
+      event.stopPropagation();
 
       // get data to pass in to search
-      var searchStr = $(this).next().next().val;
+      var searchStr = $(this).next().next().val();
       console.log(`search string is: ${searchStr}`);
 
       // get search data
-      getDataFromEdamamApi(searchStr);
+      localStorage.setItem("theIngredient", searchStr);
   })
+} */
+
+
+function removeMainPage(){
+  console.log("Entering removeMainPage...");
+
+  // save off the current page to add on later
+  bannerDiv = $('.js-banner').detach();
+  searchDiv = $('.js-search').detach();
+  searchFilterDiv = $('.js-search-filter').detach();
+  marketListDiv = $('#js-list').detach();
 }
 
-// Helper function to add Products to Selected Farmers Market 
-function addColumnItem(item, index, products){
 
-  console.log("the index is: " + index);
-  console.log("the product is: " + item.item);
-  console.log("the product is linkable: " + item.linkable);
-  var htmlString = "";
+function insertMainPage(){
+  console.log("Entering insertMainPage...");
 
-  // put about 6 items in each row
-  if ((index === 6) || (index === 12)) {
-    htmlString +=`</div>`;
-    htmlString += `<div class="column col-light column-3">`;
-    console.log("index is 6 or 12: " + htmlString);
-  } 
+  // save off the current page to add on later
+  $('body').append(bannerDiv);
+  $('body').append(searchDiv);
+  $('body').append(searchFilterDiv);
+  $('body').append(marketListDiv);
+}
 
-  if ((products.search(item.item)) >= 0 ){
 
-    // this is linkable and available
-    if (item.linkable)  {
-      htmlString += `<a href="./details.html"><i class="fa fa-check-square-o" style="font-size:24px;"><span>${item.item}</span></i></a><br>`;
-      console.log("item is linkable and available: " + htmlString);
+// When a specific market is selected, display its data
+function displayMarketInfo(event){
+  console.log("Entering displayMarketInfo...");
 
-    // this is unlinkable and available
-    } else {
-      htmlString += `<i class="fa fa-check-square-o" style="font-size:24px"><span>${item.item}</span></i><br>`;
-      console.log("item is unlinkable and available: " + htmlString);
+  // remove the divs from main
+  removeMainPage();
+
+  // display this markets data
+  var marketHTML = `
+    <div class="row nav-bar" role="navigation">
+      <nav class="top-nav" role="navigation">
+      <a href="" class="nav-link">Main</a>
+    </nav>
+   </div>
+    <div class="row" role="header">
+      <div class="col-12 js-main-header">
+        <h1 class="js-name">${event.data.name}</h1>
+      </div>
+    </div>
+    <div role="main">
+    <div class="row js-address-hours">
+      <div class="col-6">
+        <h2><u>Address and Contact Info</u></h2>
+        <h3 class="js-addr">${event.data.street}</h3>
+        <h3 class="js-addr2">${event.data.cityState}</h3>
+      </div>
+      <div class="col-6">
+        <h2>Links and Hours</h2>
+        <h3><a class="js-google" target="_blank" href="${event.data.googleLink}">Google Link</a></h3>
+        <h3><a class="js-fb" target="_blank" href="${event.data.facebookLink}">Facebook Link</a></h3>
+        <h3 class="js-schedule">${event.data.hours}</h3>
+      </div>
+    </div> 
+    <div class="row products">
+        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column1"></tr></tbody></table></div>
+        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column2"></tr></tbody></table></div>
+        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column3"></tr></tbody></table></div>
+        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column4"></tr></tbody></table></div>
+    </div> 
+  </div>
+  `;
+  $('#js-market').prop('hidden',false).html(marketHTML);
+
+  // add products
+  for (let i=0; i<event.data.products.length; i++){
+    var card = `<td><p class="js-fm-text js-cards-product">${event.data.products[i]}</p></td>`;
+    var col = "";
+
+    if (i % 4 === 0) {
+       col = ".p-column1";
+     } else if (i % 4 === 1) {
+       col = ".p-column2";
+     } else if (i % 4 === 2) {
+       col = ".p-column3";
+     } else if (i % 4 === 3) {
+       col = ".p-column4";
+     }
+    $(col).append(card);
+  }
+
+  $('.nav-link').on("click",event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    $('#js-market').prop('hidden',true).empty();
+    insertMainPage();
+
+  });
+
+}
+
+
+// Add all data to the markets list
+var setUSDADetailData = function(detailResults){
+  console.log("Entering setUSDADetailData...");
+
+  marketIDsIndex += 1;  
+
+  // get the details on this market and save it off in the markets array.
+  for (var key in detailResults) {
+    var idResults = detailResults[key];
+
+    // save the data
+    var market = new Object();
+    market.id = marketIDs[marketIDsIndex].id;
+    market.name = marketIDs[marketIDsIndex].name;
+    market.distance = marketIDs[marketIDsIndex].distance;
+    market.street = idResults.Address.slice(0,idResults.Address.indexOf(','));
+    market.cityState = idResults.Address.slice(idResults.Address.indexOf(',')+2, idResults.Address.length);
+    market.googleLink = idResults.GoogleLink;
+    market.facebookLink = `https:\\facebook.com/search/top/?q= ${market.name}`;
+    market.hours = idResults.Schedule;
+    market.products = idResults.Products.split(';');;
+  }
+  markets.push(market);
+
+  // display the market if it contains the
+  // selected products
+
+  // compare with each selected product
+  var keep = false;
+  if (selectedProducts.length > 0 && market.products.length > 0){
+
+    for ( prod in selectedProducts ) {
+
+      if (market.products.length > 0) {
+        var answer = market.products.join().includes(selectedProducts[prod]);
+        if ( answer ) {
+          keep = true;
+        }
+      }
     }
+
+  // if no products are selected just show all the markets
+  } else if (selectedProducts.length == 0) {
+    keep = true;
   }
 
-  // this is unavailable
-  else  {
-    htmlString += `<i class="fa fa-times-rectangle" style="font-size:24px"><span>${item.item}</span></i><br>`;
-    console.log("item is unavailable: " + htmlString);
+  if ( keep == true ) {
+    displayIndex += 1;
+    var idStr = "card" + displayIndex;
+    var card = `
+            <td class="${idStr} js-cards">
+            <p class="js-fm-text js-cards-name">${marketIDs[marketIDsIndex].name}<p><p class="the-id" hidden>${marketIDs[marketIDsIndex].id}</p>
+            <p class="js-fm-text js-cards-dist">(${marketIDs[marketIDsIndex].distance} miles)</p>
+            </td>
+            `;
+    var col = "";
+    if (displayIndex % 4 === 0) {
+       col = ".column1";
+     } else if (displayIndex % 4 === 1) {
+       col = ".column2";
+     } else if (displayIndex % 4 === 2) {
+       col = ".column3";
+     } else if (displayIndex % 4 === 3) {
+       col = ".column4";
+     }
+    $(col).append(card);
+
+     // add the callback for selected markets
+     var element = " td." + idStr;
+     $(col).on("click", element, market, event => {
+
+       event.preventDefault();
+       event.stopPropagation();
+
+       displayMarketInfo(event);
+
+   } );
+
   }
-
-  return htmlString;
-}
-
-// Display Selected Farmers Market Details
-function displayUSDADetailData(detailresults) {
-  console.log("Entering displayUSDADetailData...");
-  for (var key in detailresults) {
-      console.log(`the key is: ${key}`);
-      idResults = detailresults[key];
-      console.log(`the address is: ${idResults.Address}`);
-
-      // put the data on the page
-      var streetAddress = idResults.Address.slice(0,idResults.Address.indexOf(','));
-      var cityStateZip = idResults.Address.slice(idResults.Address.indexOf(',')+2, idResults.Address.length);
-      $(".js-name").html(localStorage.getItem("theName"));
-      $(".js-addr").html(streetAddress);
-      $(".js-addr2").html(cityStateZip);
-      $(".js-google").attr("href", idResults.GoogleLink);
-      $(".js-fb").attr("href", `https:\\facebook.com/search/top/?q= ${localStorage.getItem("theName")}`);
-      $(".js-schedule").html("Hours: " + idResults.Schedule);
-
-      // remove all the columns and re-create below
-      $(".column-3").each(function(item){$(this).remove()});
-
-      // add all product items
-      var productsRow = `<div class="column col-light column-3">`;
-      products.forEach(function(item, index) { productsRow += addColumnItem(item, index, idResults.Products)});
-      console.log(productsRow);
-      productsRow += `</div>`;
-      $('.products').prop('hidden',false).html(productsRow);
-      //$(productsRow).appendTo($(".products"));
-  }
-
-  // add callback for recipes
-  addRecipeSubmitCB();
 }
 
 
 // Get Selected Farmers Market Data from the USDA
-function getDetailsFromUSDAApi() {
+function getDetailsFromUSDAApi(theID) {
   console.log("Entering getDetailsFromUSDAApi...");
-  const detailUrl = MARKET_SEARCH_URL + "mktDetail?id=" + localStorage.getItem("theID");
-  console.log(`the url is: ${detailUrl}`);
-    $.ajax({
+  const detailUrl = MARKET_SEARCH_URL + "mktDetail?id=" + theID;
+  console.log("detail url is: " + detailUrl);
+    $.when($.ajax({
         type : "GET",
         contentType : "application/json; charset=utf-8",
         // submit a get request to the restful service mktDetail.
         url : detailUrl,
-        dataType : 'jsonp',
-        jsonpCallback : 'displayUSDADetailData'
-    });
+        dataType : 'jsonp'})).then(setUSDADetailData);
+  //      jsonpCallback : 'setUSDADetailData'
+ //   });
 }
 
-// Add Callback for the Selected Farmers Market
-function addMarketDetailsCB(){
-    console.log("Entering addMarketDetailsCB...");
-
-  $('a.js-link').on('click', function(event) {
-    console.log("Entering anonymous addMarketDetailsCB...");
-    event.preventDefault();
-    event.stopPropagation();
-
-    // retrieve the page data to open the window
-    var theHref = $(this).attr('href');
-    var theTgt = $(this).attr('target');
-    var theName = $(this).html();
-    var theID = $(this).next().html();
-    setTimeout(function(event){window.open(theHref,theTgt);},500);
-
-    // Call the API
-    localStorage.setItem("theID", theID);
-    localStorage.setItem("theName", theName);
-
-    console.log(theName + ' ' + theHref + ' ' + theTgt + ' ' + localStorage.getItem("theID"));
-  })
-}
-
-// Helper function for displaying Farmers Market List
-function renderMarketListResult(result) {
-  console.log("Entering renderMarketListResult...");
-  var marketName = result.marketname.split(" ");
-  var distance = marketName.shift();
-  var name = marketName.join(" ");
-
-  console.log(result.id);
-  console.log(name);
-  console.log(distance);
-  return `
-    <a class="js-link" target="_blank" href="./market.html">${name}</a>
-    <p  class="the-id" hidden>${result.id}</p>
-    <span>(${distance} miles from zipcode center)</span><br>
-  `;
-}
 
 // Display Farmers Market List
 function displayUSDASearchData(searchResults) {
   console.log("Entering displayUSDASearchData...");
-  var resultsHTML, column1, column2, column3;
-  const columnEnd = `</div>`;
+  var resultsHTML, column1, column2, column3, column4;
+  const columnEnd = `</tr></tbody></table></div>`;
+  var isError = false;
 
-  // create the top half of the html
+  // remove any previous list
+  $(".js-list").empty();
+
+  // and create the html framework
   var resultsHTML = `
-    <div role="header" class="js-detail-header">
-        <h1><u>Select a Location For More Information</u><hr></h1></div>
-    <div class="row">`;
+    <div class="row js-search-filter">
+      <div class="col-12"><u><b class="js-list-title">Select a Location for More Information</b></u>
+                                                     (*distances are from zipcode center)
+                                                     <span>${USDA_ATTRITION}</span>
+        <div class="row CardBoxes">
+          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column1"></tr></tbody></table></div>
+          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column2"></tr></tbody></table></div>
+          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column3"></tr></tbody></table></div>
+          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column4"></tr></tbody></table></div>
+        </div>
+      </div>
+    </div>
+   `
+
+  // and put it out in the DOM
+  $('#js-list').prop('hidden',false).html(resultsHTML);
 
   // get the search results
+  var results = [];
+  var filteredResults = [];
+
   for (var key in searchResults) {
-    console.log(`the key is: ${key}`);
-    var results = searchResults[key];
+    results = searchResults[key];
 
-    // create the columns
-    column1 = `<div class="column-list column-3">`;
-    column2 = `<div class="column-list column-3">`;
-    column3 = `<div class="column-list column-3">`;
+    if (results[0].id.match(/error/gi) != null) {
+      displayError();
+      isError = true;
+      break;
 
-    for (var i = 0; i < results.length; i++) {
-      console.log(`result ${i} is : ${results[i].marketName}`);
-      if (i % 3 === 0){
-        column1 += renderMarketListResult(results[i]);
+    } else  {
+
+      // for every market, need to get the details so
+      // the market list can be filtered by products
+      // that are available at each market
+      for (let i = 0; i < results.length; i++) {
+        var marketName = results[i].marketname.split(" ");
+        var market = new Object();
+
+        market.id = results[i].id;
+
+        // order dependent - shift off the distance
+        // and you're left with the name
+        market.distance = marketName.shift();
+        market.name = marketName.join(" ");
+
+        marketIDs.push(market);
+
+        getDetailsFromUSDAApi(market.id);
       }
-      else if (i % 3 === 1) {
-        column2 += renderMarketListResult(results[i]);
-      }
-      else {
-        column3 += renderMarketListResult(results[i]);        
-      }
+
     }
   }
 
-  // add the bottom of the html
-  resultsHTML += column1 + columnEnd;
-  resultsHTML += column2 + columnEnd;
-  resultsHTML += column3 + columnEnd;
-  resultsHTML += `</div><div class="footer"><p></p><hr></div>`;
-
-  $('.js-main').prop('hidden',false).html(resultsHTML);
-  $('.js-main').addClass("js-detail-bkgd");
-
-  // add the callback for the selected farmers market
-  addMarketDetailsCB();
-
 }
+
 
 // Get Farmers Market List from USDA
 function getDataFromUSDAApi(searchTerm) {
   console.log("Entering getDataFromUSDAApi...");
   const zipUrl = MARKET_SEARCH_URL + "zipSearch?zip=" + searchTerm;
-  console.log(`the url is: ${zipUrl}`);
+  console.log("zip url is: " + zipUrl);
   $.ajax ({
     type : "GET",
     contentType : "application/json; charset=utf-8",
@@ -259,58 +362,83 @@ function getDataFromUSDAApi(searchTerm) {
   });
 }
 
-// Convert the city-state string into clean, city and state
-// variables.
-function getCityState(csString) {
-  var divider = ",";
-  var cityState = [];
-  var found1 = csString.search(",");
-  var found2 = csString.search(" ");
-  if ( found1 >= 0 || found2 >= 0 ) {
-    if (csString.search(",") < 0) {
-      divider = " ";
-    }
-    cityState = csString.split(divider);
-  }
-  return cityState;
+
+function displayError(){
+  console.log("Entering displayError...");
+  $("#zipcode").addClass("js-error");
+  $("fieldset").append(`<p class="js-err-msg">Invalid Zipcode</p>`);
+
+  $("#zipcode").on("focus", event => {
+    $(".js-err-msg").remove();
+  });
 }
 
-// Add Callback for the Farmers Market List
+
+// Reset the page variables and html
+function initializeMarkets() {
+  console.log("Entering initializeMarkets...");
+
+  // remove children from these divs
+  $('#js-list').prop('hidden',true).empty();
+  $('#js-market').prop('hidden',true).empty();
+
+  // reset the market lists
+  marketIDs = [];
+  marketIDsIndex = -1;
+  markets = [];
+  displayIndex = -1;
+  selectedProducts = [];  
+}
+
+
+// Add the callback for the search button
 function addMarketListCB(){
     console.log("Entering addMarketListCB...");
-
-  $('#market-search').submit(event => {
-    console.log("Entering anonymous addMarketListCB...");
+  $('.search-button').on("click", event => {
     event.preventDefault();
+
+    // clear all page-scoped variables
+    initializeMarkets();
 
     // get the search data from the zipcode field
     const zip = $('#zipcode').val();
 
-    // get the search data from the city-state field
-    const cityState = getCityState($('#city-state').val());
+    // if the data is valid, call the api
+    if (zip.length == 5) {
 
-    // if the data is valid, send it on to the api
-    console.log(`zip length is: ${zip.length}`);
-    if (zip.length > 4 && zip.length < 11) {
+      // retrieve the list of selected products, if any
+      $(".box:checked").each(function(index){
+          selectedProducts.push($(this).next().text());
+      });
 
-      // Save off the form and image for later.
-      homeHeader = $('.js-main-header').detach();
-      homeForm = $('.js-main-form').detach();
-      homeFooter = $('.js-main-footer').detach();
-      $('.js-main').removeClass("js-background");
+      console.log("selectedProducts: " + selectedProducts);
+      console.log("size is: " + selectedProducts.length);
 
-      // Call the API.
+      console.log("zipcode is: " + zip);
       getDataFromUSDAApi(zip);
-    } else if (cityState.length === 2) {
-      getDataFromUSDAApi(cityState);
+
     } else {
       displayError();
     }
-  });  
+  });    
 }
+
+
+// Enable the search button to allow searches.
+function allowSearch(){
+    console.log("Entering allowSearch...");
+
+    $('.search-button').removeAttr("disabled");
+    $('.search-button').removeClass("disabled-button");
+    $('.js-text').off("keypress");
+    addMarketListCB();
+}
+
 
 function main() {
   console.log(`Entering main...`);  
-  addMarketListCB();
+  $('.js-text').on("keypress", allowSearch );
 }
+
+$(main);
 
