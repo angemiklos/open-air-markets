@@ -9,22 +9,23 @@
 .nav-bar {
   position: fixed;
   top: 0;
- // left: 0;
-  right: 0;
- // padding: 10px;
- // border-bottom: 1px solid #CCCCCC;
+  left: 0;
 }
 
 .top-nav {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  left: 20px;
+  top: 20px;
 }
 
 .nav-link {
   text-decoration: none;
   font-size: 18px;
   padding: 0 6px;
+  background-color: lightgreen;
+  box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+  display: block;
+  line-height: 2;
 }
 
 .nav-link:hover {
@@ -38,15 +39,19 @@
   background-size: cover;
   background-position: center;
   position : relative;
-  height : 350px;
+  height : 70vh;
   margin : 5px auto;
 }
 
 h1 {
-	font : bold 28px 'Supermercado+One', cursive, sans-serif;
+	font : bold 40px 'Supermercado+One', cursive, sans-serif;
 }
 
 h2 {
+	font : bold 30px 'Supermercado+One', cursive, sans-serif;
+}
+
+h3 {
 	font : bold 22px 'Supermercado+One', cursive, sans-serif;
 }
 
@@ -54,23 +59,26 @@ h2 {
 .js-banner-text {
 	text-align : center;
 	position: absolute;
-	top: 50%;
-	left: 50%;
-    transform: translate(-50%, -50%); 
+	top: 25%;
+	left: 40%;
+    transform: translate(-3%, -35%); 
 	color : white;
-	text-shadow : 0 2px 2px black;
+	text-shadow : 11px 4px 10px black;
 }
 
 /* the search elements */
+.js-search {
+	text-align: center;
+}
+
 .search-title {
 	display: inline-block;
+	text-align: center;
 }
 
 .search-form {
 	display: inline-block;
-	position: relative;
-	left: 10%;
-	font : bold 16px 'Supermercado+One', sans-serif;
+	font : bold 18px 'Supermercado+One', sans-serif;
 }
 
 fieldset {
@@ -101,12 +109,15 @@ label {
 #zipcode {
   display: inline-block;
   text-align: center;
-  font-family: "Supermercado+One", sans-serif;
-  font-size: 16px;
   font-weight: 500;
   line-height: 30px;
   height: 30px; 
   border-radius: 3px;
+  margin-right: 10px;
+}
+
+.js-search-filter {
+	padding-top: 0 10px 10px 10px;
 }
 
 .js-error {
@@ -121,6 +132,7 @@ label {
 }
 
 .js-list-title {
+    font-size: 18px;
     line-height: 40px;
 }
 
@@ -128,35 +140,53 @@ label {
   text-align: center;
 }
 
-.js-cards-name, .js-cards-product {
+h3.js-schedule {
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+.js-cards-name {
 	font : bold 12px 'Supermercado+One', cursive, sans-serif;
 }
 
-.js-cards-dist {
+.js-cards-dist .js-note {
 	font : 8px 'Supermercado+One', cursive, sans-serif;
 }
 
 td {
-	display:block;
+	display: block;
 	clear: both;
 	margin-top: 3px;
 } 
 
-.js-cards:hover, .js-cards:focus {
-	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
+.js-cards:hover {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+	cursor: pointer;
 }
 
 #CheckBoxes {
-	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
 }
 
-.CardBoxes, .js-address-hours, .products, .js-cards-product {
-	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
+.CardBoxes {
+	/* box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19); 
+	min-height: 100px; */
+}
+
+.js-address, .js-hours {
+	/* box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19); 
+	min-height: 300px; */
 }
 
 .js-cards, .js-cards-product {
 	margin: 5px;
 	padding: 10px;
 	background-color: lightgreen;
+}
+
+.js-footer {
+	display: block;
+	margin: 0 auto;
+	padding: 15px;
 }
 

@@ -7,13 +7,14 @@ var bannerDiv;
 var searchDiv;
 var searchFilterDiv;
 var marketListDiv;
+var zip;
 
 const MY_EDAMAM_APP_ID = "2fa4c48e";
 const MY_EDAMAM_APP_KEY = "5f32aeea8e822b1fcf09a139329c7216";
 const MARKET_SEARCH_URL = "https://search.ams.usda.gov/farmersmarkets/v1/data.svc/";
 const RECIPE_SEARCH_URL = "https://api.edamam.com/";
 const EDAMAM_ID_STR = `&app_id=${MY_EDAMAM_APP_ID}&app_key=${MY_EDAMAM_APP_KEY}&from=0&to=30`;
-const USDA_ATTRITION = `<p>This product uses USDA’s National Farmers Market API but is not endorsed or certified by USDA.</p>`
+const USDA_ATTRITION = `This product uses USDA’s National Farmers Market API but is not endorsed or certified by USDA.`
 const EDAMAM_ATTRITION = `<div id="edamam-badge" data-color="white" hidden></div>`;
 
 function showMarketIDs(){
@@ -121,7 +122,7 @@ function displayMarketInfo(event){
   var marketHTML = `
     <div class="row nav-bar" role="navigation">
       <nav class="top-nav" role="navigation">
-      <a href="" class="nav-link">Main</a>
+      <p><a href="" class="nav-link">Home</a></p>
     </nav>
    </div>
     <div class="row" role="header">
@@ -131,19 +132,19 @@ function displayMarketInfo(event){
     </div>
     <div role="main">
     <div class="row js-address-hours">
-      <div class="col-6">
-        <h2><u>Address and Contact Info</u></h2>
+      <div class="col-6 js-address">
+        <h2>Address Info</h2>
         <h3 class="js-addr">${event.data.street}</h3>
         <h3 class="js-addr2">${event.data.cityState}</h3>
       </div>
-      <div class="col-6">
-        <h2>Links and Hours</h2>
+      <div class="col-6 js-hours">
+        <h2>Links and Schedule</h2>
         <h3><a class="js-google" target="_blank" href="${event.data.googleLink}">Google Link</a></h3>
         <h3><a class="js-fb" target="_blank" href="${event.data.facebookLink}">Facebook Link</a></h3>
-        <h3 class="js-schedule">${event.data.hours}</h3>
       </div>
     </div> 
     <div class="row products">
+        <p>These are the products available at this market...</p>
         <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column1"></tr></tbody></table></div>
         <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column2"></tr></tbody></table></div>
         <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column3"></tr></tbody></table></div>
@@ -153,21 +154,40 @@ function displayMarketInfo(event){
   `;
   $('#js-market').prop('hidden',false).html(marketHTML);
 
-  // add products
-  for (let i=0; i<event.data.products.length; i++){
-    var card = `<td><p class="js-fm-text js-cards-product">${event.data.products[i]}</p></td>`;
-    var col = "";
+  // add in the hours
+  if (event.data.hours.length > 0 && event.data.hours[0].length != 0) {
+    for (let i=0; i<event.data.hours.length; i++){
+      if (event.data.hours[i].length > 0 ) {
+        $(".js-hours").append(`<h3 class="js-schedule">${event.data.hours[i]}</h3>`);
+      }
+    }
 
-    if (i % 4 === 0) {
-       col = ".p-column1";
-     } else if (i % 4 === 1) {
-       col = ".p-column2";
-     } else if (i % 4 === 2) {
-       col = ".p-column3";
-     } else if (i % 4 === 3) {
-       col = ".p-column4";
-     }
-    $(col).append(card);
+    // no hours to add
+  } else {
+      $(".js-hours").append(`<h3 class="js-schedule">This market has no schedule listed</h3>`);
+  }
+
+  // add products
+  if (event.data.products.length > 0 && event.data.products[0].length != 0) {
+    for (let i=0; i<event.data.products.length; i++){
+      var card = `<td><p class="js-fm-text js-cards-product">${event.data.products[i]}</p></td>`;
+      var col = "";
+
+      if (i % 4 === 0) {
+         col = ".p-column1";
+       } else if (i % 4 === 1) {
+         col = ".p-column2";
+       } else if (i % 4 === 2) {
+         col = ".p-column3";
+       } else if (i % 4 === 3) {
+         col = ".p-column4";
+       }
+      $(col).append(card);
+    }
+
+    // no products to add
+  } else {
+      $(".p-column1").append(`<td><p class="js-fm-text js-cards-product">This market has no products listed</p></td>`);
   }
 
   $('.nav-link').on("click",event => {
@@ -180,6 +200,7 @@ function displayMarketInfo(event){
   });
 
 }
+
 
 
 // Add all data to the markets list
@@ -201,7 +222,7 @@ var setUSDADetailData = function(detailResults){
     market.cityState = idResults.Address.slice(idResults.Address.indexOf(',')+2, idResults.Address.length);
     market.googleLink = idResults.GoogleLink;
     market.facebookLink = `https:\\facebook.com/search/top/?q= ${market.name}`;
-    market.hours = idResults.Schedule;
+    market.hours = idResults.Schedule.split(';');
     market.products = idResults.Products.split(';');;
   }
   markets.push(market);
@@ -226,7 +247,7 @@ var setUSDADetailData = function(detailResults){
   // if no products are selected just show all the markets
   } else if (selectedProducts.length == 0) {
     keep = true;
-  }
+  } 
 
   if ( keep == true ) {
     displayIndex += 1;
@@ -261,6 +282,27 @@ var setUSDADetailData = function(detailResults){
    } );
 
   }
+
+  // all markets in list have been run. If none are displayed,
+  // provide a statement and position the page.
+  console.log("marketIDsIndex is: " + marketIDsIndex);
+  console.log("marketIDs.length is: " + marketIDs.length);
+  if ( marketIDsIndex == marketIDs.length-1 ) {
+
+    // if no markets were found, add some text explaining this
+    if (displayIndex > 0) {
+      $(".js-title").prepend(`<u><b class="js-list-title">Results for Zip ${zip}: Select a Location for More Information.</b></u>
+                                                     (*distances are from zipcode center)`);
+      $(".CardBoxes").show();
+    } else {
+      $(".js-title").prepend(`<u><b class="js-list-title">Sorry, no markets found for this zip code and filter.</b></u>`);
+      $(".CardBoxes").hide();
+    }
+
+    // moves the scrollbar to show the list has been added.
+    var fmList = document.getElementById("js-list");
+    fmList.scrollIntoView();
+  }
 }
 
 
@@ -288,14 +330,12 @@ function displayUSDASearchData(searchResults) {
   var isError = false;
 
   // remove any previous list
-  $(".js-list").empty();
+  $("#js-list").empty();
 
   // and create the html framework
   var resultsHTML = `
-    <div class="row js-search-filter">
-      <div class="col-12"><u><b class="js-list-title">Select a Location for More Information</b></u>
-                                                     (*distances are from zipcode center)
-                                                     <span>${USDA_ATTRITION}</span>
+    <div class="row">
+      <div class="col-12 js-title">
         <div class="row CardBoxes">
           <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column1"></tr></tbody></table></div>
           <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column2"></tr></tbody></table></div>
@@ -304,7 +344,9 @@ function displayUSDASearchData(searchResults) {
         </div>
       </div>
     </div>
-   `
+    <div class="js-footer"><span>${USDA_ATTRITION} (An Application Program Interface (API) 
+    is a set of routines, protocols, and tools for building software applications.)</span></div>
+   `;
 
   // and put it out in the DOM
   $('#js-list').prop('hidden',false).html(resultsHTML);
@@ -401,7 +443,7 @@ function addMarketListCB(){
     initializeMarkets();
 
     // get the search data from the zipcode field
-    const zip = $('#zipcode').val();
+    zip = $('#zipcode').val();
 
     // if the data is valid, call the api
     if (zip.length == 5) {
