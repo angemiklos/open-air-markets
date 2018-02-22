@@ -1,124 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>open air markets | home</title>
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<link rel="stylesheet" type="text/css" href="normalize.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>open air markets | home</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="normalize.css">
     <link rel="stylesheet" type="text/css" href="responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
-    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Supermercado+One" rel="stylesheet">	
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Supermercado+One" rel="stylesheet">   
     <script
-		src="https://code.jquery.com/jquery-3.3.1.js"
-		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-		crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
     <script src="index.js"></script>
   </head>
   <body>
-	<div class="js-banner">
-	    <div role="header" class="js-banner-text">
-		    <h1>Open-Air Markets</h1>
-	        <h2>Where you can find all information on your local farmers markets!</h2>  
-	    </div>
-	</div>
-	<div class="row js-search">
-		<div class="col-12">
-	    	<h3 class="search-title">Find a Market</h3>
-		    <form class="search-form" action="" id="market-search" method="get">
-		    	<fieldset>
-			    	<label for="zipcode">Zip Code:</label>
-			    	<input type="text" name="zipcode" class="js-text" id="zipcode" pattern="[0-9]{5}" autocomplete="off" required>
-			    	<input type="image" role="button" class="search-button disabled-button" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.4.6_challenge_design_to_code/magnifying-glass.png" alt="Search" disabled>
-		    	</fieldset>
-		    </form>
-	    </div>
-	</div>
-	<div class="row js-search-filter">
-        <div class="col-12 prod-list"><b class=js-list-title>Select Products - if none are selected, all farmers markets by zipcode are returned</b> 
-			<div class="row" id="CheckBoxes">
-				<div class="col-4">
-					<table border="0">
-						<tbody> 
-							<tr>
-							<td><input name="chkProd01" type="checkbox" id="chkProd01" value="Bakedgoods" class="box">
-							<span id="chkProd01L">Baked goods</span></td>
-							<td><input name="chkProd02" type="checkbox" id="chkProd02" value="Cheese" class="box">
-							<span id="chkProd02L">Cheese and/or dairy products</span></td>
-							<td><input name="chkProd03" type="checkbox" id="chkProd03" value="Crafts" class="box">
-							<span id="chkProd03L">Crafts and/or woodworking items</span></td>
-							<td><input name="chkProd04" type="checkbox" id="chkProd04" value="Flowers" class="box">
-							<span id="chkProd04L">Cut flowers</span></td>
-							<td><input name="chkProd05" type="checkbox" id="chkProd05" value="Eggs" class="box">
-							<span id="chkProd05L">Eggs</span></td>
-							<td><input name="chkProd06" type="checkbox" id="chkProd06" value="Seafood" class="box">
-							<span id="chkProd06L">Fish and/or seafood</span></td>
-							<td><input name="chkProd07" type="checkbox" id="chkProd07" value="Herbs" class="box">
-							<span id="chkProd07L">Fresh and/or dried herbs</span></td>
-							<td><input name="chkProd08" type="checkbox" id="chkProd08" value="Vegetables" class="box">
-							<span id="chkProd08L">Fresh fruit and vegetables</span></td>
-							<td><input name="chkProd09" type="checkbox" id="chkProd09" value="Honey" class="box">
-							<span id="chkProd09L">Honey</span></td>
-							<td><input name="chkProd10" type="checkbox" id="chkProd10" value="Jams" class="box">
-							<span id="chkProd10L">Canned or preserved fruits, vegetables, jams, jellies, preserves, salsas, pickles, dried fruit, etc.</span></td>
-			    			</tr>  
-			    		</tbody> 
-			    	</table>
-		    	</div> 
-				<div class="col-4">
-					<table border="0">
-						<tbody> 
-							<tr>
-							<td><input name="chkProd11" type="checkbox" id="chkProd11" value="Maple" class="box">
-							<span id="chkProd11L">Maple syrup and/or maple products</span></td>
-							<td><input name="chkProd12" type="checkbox" id="chkProd12" value="Meat" class="box">
-							<span id="chkProd12L">Meat</span></td>
-							<td><input name="chkProd13" type="checkbox" id="chkProd13" value="Nuts" class="box">
-							<span id="chkProd13L">Nuts</span></td>
-							<td><input name="chkProd14" type="checkbox" id="chkProd14" value="Plants" class="box">
-							<span id="chkProd14L">Plants in containers</span></td>
-							<td><input name="chkProd15" type="checkbox" id="chkProd15" value="Poultry" class="box">
-							<span id="chkProd15L">Poultry</span></td>
-							<td><input name="chkProd16" type="checkbox" id="chkProd16" value="Prepared" class="box">
-							<span id="chkProd16L">Prepared foods (for immediate consumption)</span></td>
-						    <td><input name="chkProd17" type="checkbox" id="chkProd17" value="Soap" class="box">
-						    <span id="chkProd17L">Soap and/or body care products</span></td>
-						    <td><input name="chkProd18" type="checkbox" id="chkProd18" value="Trees" class="box">
-						    <span id="chkProd18L">Trees, shrubs</span></td>
-							<td><input name="chkProd19" type="checkbox" id="chkProd19" value="Wine" class="box">
-							<span id="chkProd19L">Wine, beer, hard cider</span></td>
-							<td><input name="chkProd20" type="checkbox" id="chkProd20" value="Coffee" class="box">
-							<span id="chkProd20L">Coffee and or tea</span></td>
-			    			</tr>  
-			    		</tbody> 
-			    	</table>
-				</div> 
-				<div class="col-4">
-					<table border="0">
-						<tbody> 
-							<tr>
-							<td><input name="chkProd21" type="checkbox" id="chkProd21" value="Beans" class="box">
-							<span id="chkProd21L">Dry beans</span></td>
-							<td><input name="chkProd22" type="checkbox" id="chkProd23" value="Grains" class="box">
-							<span id="chkProd23L">Grains and or flour</span></td>
-							<td><input name="chkProd23" type="checkbox" id="chkProd24" value="Juices" class="box">
-							<span id="chkProd24L">Juices and or non-alcoholic ciders</span></td>
-							<td><input name="chkProd24" type="checkbox" id="chkProd25" value="Mushrooms" class="box">
-							<span id="chkProd25L">Mushrooms</span></td>
-							<td><input name="chkProd25" type="checkbox" id="chkProd26" value="PetFood" class="box">
-							<span id="chkProd26L">Pet food</span></td>
-							<td><input name="chkProd26" type="checkbox" id="chkProd27" value="Tofu" class="box">
-							<span id="chkProd27L">Tofu and or non-animal protein</span></td>
-							<td><input name="chkProd27" type="checkbox" id="chkProd28" value="WildHarvested" class="box">
-							<span id="chkProd28L">Wild harvested forest products: mushrooms, medicinal herbs, edible fruits and nuts, etc.</span></td>
-							</tr>
-						</tbody>
-					</table> 
-				</div> 
-			</div> 
-		</div>  
-	</div>
-    <div  id="js-list" class=="row" aria-live="assertive" hidden></div>
-    <div  id="js-market" class=="row" aria-live="assertive" hidden></div>
+    <div class="js-banner"></div>        
+    <div role="banner" class="js-banner-text">
+        <h1>Open-Air Markets</h1>
+        <h2>Where you can find all information on your local farmers markets!</h2>  </div>
+    <main>
+        <div id="js-search" class="row" aria-live="polite">
+            <div class="col-12 search-line">
+                <h3 class="search-title">Find a Market</h3>
+                <form class="search-form" action="" id="market-search" method="get">
+                    <fieldset>
+                        <label class="zip-label" for="zipcode">Zip Code:</label>
+                        <input type="text" name="zipcode" class="js-text" id="zipcode" pattern="[0-9]{5}" autocomplete="off" required>
+                        <input type="image" role="button" class="search-button disabled-button" src="https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.4.6_challenge_design_to_code/magnifying-glass.png" value="Search" alt="Search" disabled>
+                    </fieldset>
+                </form></div>
+            <div class="row js-search-filter">
+                <div class="col-12 prod-list"><b class="js-list-title">Select Products - if none are selected, all farmers markets by zipcode are returned</b> 
+                    <div class="row" id="CheckBoxes">
+                        <div class="col-4">
+                            <div class="box">
+                                <input aria-label="Bakery" type="checkbox"><span>Baked goods</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Dairy" type="checkbox"><span>Cheese and/or dairy products</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Crafts" type="checkbox"><span>Crafts and/or woodworking items</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Flowers" type="checkbox"><span>Cut flowers</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Eggs" type="checkbox"><span>Eggs</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Fish" type="checkbox"><span>Fish and/or seafood</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Herbs" type="checkbox"><span>Fresh and/or dried herbs</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Fruit and Vegetables" type="checkbox"><span>Fresh fruit and vegetables</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Honey" type="checkbox"><span>Honey</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Preserved items" type="checkbox"><span>Canned or preserved fruits, vegetables, jams, jellies, preserves, salsas, pickles, dried fruit, etc.</span>
+                            </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="box">
+                                <input aria-label="Maple" type="checkbox"><span>Maple syrup and/or maple products</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Meat" type="checkbox"><span>Meat</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Nuts" type="checkbox"><span>Nuts</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Small Plants" type="checkbox"><span>Plants in containers</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Poultry" type="checkbox"><span>Poultry</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Ready-to-Eat" type="checkbox"><span>Prepared foods (for immediate consumption)</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Body Care" type="checkbox"><span>Soap and/or body care products</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Large Plants" type="checkbox"><span>Trees, shrubs</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Alcoholic Drinks" type="checkbox"><span>Wine, beer, hard cider</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Coffee and Tea" type="checkbox"><span>Coffee and/or tea</span>
+                            </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="box">
+                                <input aria-label="Beans" type="checkbox"><span>Dry beans</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Grains" type="checkbox"><span>Grains and or flour</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Non-alcoholic Drinks" type="checkbox"><span>Juices and or non-alcoholic ciders</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Mushrooms" type="checkbox"><span>Mushrooms</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Pet Food" type="checkbox"><span>Pet food</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Non-animal Proteins" type="checkbox"><span>Tofu and/or non-animal protein</span>
+                            </div>
+                            <div class="box">
+                                <input aria-label="Wild Harvest" type="checkbox"><span>Wild harvested forest products: mushrooms, medicinal herbs, edible fruits and nuts, etc.</span>
+                            </div>
+                        </div> 
+                    </div> 
+                </div>  </div></div>
+        <div id="js-list" class="row" aria-live="polite" hidden></div>
+        <div id="js-market" class="row" aria-live="polite" hidden></div>
+    </main>
  </body>
 </html>

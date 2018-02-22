@@ -3,9 +3,9 @@ var marketIDsIndex = -1;
 var markets = [];
 var displayIndex = -1;
 var selectedProducts = [];
-var bannerDiv;
+var bannerImageDiv;
+var bannerTextDiv;
 var searchDiv;
-var searchFilterDiv;
 var marketListDiv;
 var zip;
 
@@ -93,9 +93,9 @@ function removeMainPage(){
   console.log("Entering removeMainPage...");
 
   // save off the current page to add on later
-  bannerDiv = $('.js-banner').detach();
-  searchDiv = $('.js-search').detach();
-  searchFilterDiv = $('.js-search-filter').detach();
+  bannerImageDiv = $('.js-banner').detach();
+  bannerTextDiv = $('.js-banner-text').detach();
+  searchDiv = $('#js-search').detach();
   marketListDiv = $('#js-list').detach();
 }
 
@@ -104,10 +104,10 @@ function insertMainPage(){
   console.log("Entering insertMainPage...");
 
   // save off the current page to add on later
-  $('body').append(bannerDiv);
-  $('body').append(searchDiv);
-  $('body').append(searchFilterDiv);
-  $('body').append(marketListDiv);
+  $('body').prepend(bannerTextDiv);
+  $('body').prepend(bannerImageDiv);
+  $('main').prepend(marketListDiv);
+  $('main').prepend(searchDiv);
 }
 
 
@@ -122,42 +122,45 @@ function displayMarketInfo(event){
   var marketHTML = `
     <div class="row nav-bar" role="navigation">
       <nav class="top-nav" role="navigation">
-      <p><a href="" class="nav-link">Home</a></p>
-    </nav>
-   </div>
-    <div class="row" role="header">
+        <p><a href="" class="nav-link">Home</a></p>
+      </nav>
+    </div>
+    <div class="row" role="banner">
       <div class="col-12 js-main-header">
         <h1 class="js-name">${event.data.name}</h1>
       </div>
     </div>
-    <div role="main">
-    <div class="row js-address-hours">
-      <div class="col-6 js-address">
-        <h2>Address Info</h2>
-        <h3 class="js-addr">${event.data.street}</h3>
-        <h3 class="js-addr2">${event.data.cityState}</h3>
-      </div>
-      <div class="col-6 js-hours">
-        <h2>Links and Schedule</h2>
-        <h3><a class="js-google" target="_blank" href="${event.data.googleLink}">Google Link</a></h3>
-        <h3><a class="js-fb" target="_blank" href="${event.data.facebookLink}">Facebook Link</a></h3>
-      </div>
-    </div> 
-    <div class="row products">
+    <div>
+      <div class="row js-address-hours">
+        <div class="col-6 js-address">
+          <h2>Address Info</h2>
+          <h3 class="js-addr">${event.data.street}</h3>
+          <h3 class="js-addr2">${event.data.cityState}</h3>
+        </div>
+        <div class="col-6 js-hours">
+          <h2>Links and Schedule</h2>
+          <h3><a class="js-google" target="_blank" href="${event.data.googleLink}">Google Link</a></h3>
+          <h3><a class="js-fb" target="_blank" href="${event.data.facebookLink}">Facebook Link</a></h3>
+        </div>
+      </div> 
+      <div class="row products">
         <p>These are the products available at this market...</p>
-        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column1"></tr></tbody></table></div>
-        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column2"></tr></tbody></table></div>
-        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column3"></tr></tbody></table></div>
-        <div class="col-3"><table id="js-products" border="0"><tbody><tr class="p-column4"></tr></tbody></table></div>
-    </div> 
-  </div>
+        <div class="col-3 p-column1"></div>
+        <div class="col-3 p-column2"></div>
+        <div class="col-3 p-column3"></div>
+        <div class="col-3 p-column4"></div>
+      </div> 
+    </div>
   `;
   $('#js-market').prop('hidden',false).html(marketHTML);
 
   // add in the hours
+  console.log("Here's all data hours: " + event.data.hours)
+  console.log("Here's all data hours length: " + event.data.hours.length)
   if (event.data.hours.length > 0 && event.data.hours[0].length != 0) {
     for (let i=0; i<event.data.hours.length; i++){
-      if (event.data.hours[i].length > 0 ) {
+      console.log("Here's the hours: " + event.data.hours[i]);
+      if (event.data.hours[i].length > 0 && !event.data.hours[i].includes('<br> <br>')) {
         $(".js-hours").append(`<h3 class="js-schedule">${event.data.hours[i]}</h3>`);
       }
     }
@@ -170,7 +173,7 @@ function displayMarketInfo(event){
   // add products
   if (event.data.products.length > 0 && event.data.products[0].length != 0) {
     for (let i=0; i<event.data.products.length; i++){
-      var card = `<td><p class="js-fm-text js-cards-product">${event.data.products[i]}</p></td>`;
+      var card = `<div><p class="js-fm-text js-cards-product">${event.data.products[i]}</p></div>`;
       var col = "";
 
       if (i % 4 === 0) {
@@ -187,7 +190,7 @@ function displayMarketInfo(event){
 
     // no products to add
   } else {
-      $(".p-column1").append(`<td><p class="js-fm-text js-cards-product">This market has no products listed</p></td>`);
+      $(".p-column1").append(`<div><p class="js-fm-text js-cards-product">This market has no products listed</p></div>`);
   }
 
   $('.nav-link').on("click",event => {
@@ -253,10 +256,11 @@ var setUSDADetailData = function(detailResults){
     displayIndex += 1;
     var idStr = "card" + displayIndex;
     var card = `
-            <td class="${idStr} js-cards">
-            <p class="js-fm-text js-cards-name">${marketIDs[marketIDsIndex].name}<p><p class="the-id" hidden>${marketIDs[marketIDsIndex].id}</p>
+            <div class="${idStr} js-cards">
+            <p class="js-fm-text js-cards-name">${marketIDs[marketIDsIndex].name}<p>
+            <p class="the-id" hidden>${marketIDs[marketIDsIndex].id}</p>
             <p class="js-fm-text js-cards-dist">(${marketIDs[marketIDsIndex].distance} miles)</p>
-            </td>
+            </div>
             `;
     var col = "";
     if (displayIndex % 4 === 0) {
@@ -271,7 +275,7 @@ var setUSDADetailData = function(detailResults){
     $(col).append(card);
 
      // add the callback for selected markets
-     var element = " td." + idStr;
+     var element = "." + idStr;
      $(col).on("click", element, market, event => {
 
        event.preventDefault();
@@ -325,8 +329,6 @@ function getDetailsFromUSDAApi(theID) {
 // Display Farmers Market List
 function displayUSDASearchData(searchResults) {
   console.log("Entering displayUSDASearchData...");
-  var resultsHTML, column1, column2, column3, column4;
-  const columnEnd = `</tr></tbody></table></div>`;
   var isError = false;
 
   // remove any previous list
@@ -337,10 +339,10 @@ function displayUSDASearchData(searchResults) {
     <div class="row">
       <div class="col-12 js-title">
         <div class="row CardBoxes">
-          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column1"></tr></tbody></table></div>
-          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column2"></tr></tbody></table></div>
-          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column3"></tr></tbody></table></div>
-          <div class="col-3"><table id="js-table" border="0"><tbody><tr class="column4"></tr></tbody></table></div>
+          <div class="col-3"><div class="column1"></div></div>
+          <div class="col-3"><div class="column2"></div></div>
+          <div class="col-3"><div class="column3"></div></div>
+          <div class="col-3"><div class="column4"></div></div>
         </div>
       </div>
     </div>
@@ -449,7 +451,7 @@ function addMarketListCB(){
     if (zip.length == 5) {
 
       // retrieve the list of selected products, if any
-      $(".box:checked").each(function(index){
+      $("[type='checkbox']:checked").each(function(index){
           selectedProducts.push($(this).next().text());
       });
 
