@@ -224,7 +224,7 @@ var setUSDADetailData = function(detailResults){
     market.street = idResults.Address.slice(0,idResults.Address.indexOf(','));
     market.cityState = idResults.Address.slice(idResults.Address.indexOf(',')+2, idResults.Address.length);
     market.googleLink = idResults.GoogleLink;
-    market.facebookLink = `https:\\facebook.com/search/top/?q= ${market.name}`;
+    market.facebookLink = "https:\/\/facebook.com\/search\/top\/?q=" + market.name;
     market.hours = idResults.Schedule.split(';');
     market.products = idResults.Products.split(';');;
   }
