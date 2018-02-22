@@ -16,14 +16,14 @@ product and vendor detail, recipes and intelligent links to concepts, ideas and 
 
 Capabilities
 ------------
-###Initial Home screen
+### Initial Home screen
 
 ![Home Screen](screenshots/HomeNoZip.JPG)
 
 Enter a zip code and receive a list of farmers markets in that area.
 If an invalid zip is entered, the user is notified.  
 
-###Invalid Zipcode entered
+### Invalid Zipcode entered
 
 ![Home Screen](screenshots/HomeBadZip.JPG)
 
@@ -32,7 +32,7 @@ allow the list to be paired down to only the markets which have the
 selected products such as baked goods, preserves, fruits and vegetables,
 etc. If no product is selected from the filter, then all markets are listed for that area.
 
-###Products selected
+### Products selected
 
 ![Home Screen](screenshots/HomeProdSel.JPG)
 
@@ -40,7 +40,7 @@ The markets in the list are selectable and provide the name of the
 market as provided by the USDA and the distance from the center of the
 zip code area.
 
-###Markets List
+### Markets List
 
 ![Home List Screen](screenshots/HomeGoodZip.JPG)
 
@@ -56,34 +56,34 @@ user is provided with the following:
 * The market yearly schedule
 * The products available at this market
 
-###Market Selected
+### Market Selected
 
 ![Home List Screen](screenshots/HomeMarketSelected.JPG)
 
-###Market Details
+### Market Details
 
 ![Market Screen](screenshots/GardensSummerGreenMarket.JPG)
 
-###Google Link
+### Google Link
 
 ![Google Screen](screenshots/GSGMGoogleLink.JPG)
 
-###Facebook Link
+### Facebook Link
 
 ![Facebook Screen](screenshots/GSGMFacebookLink.JPG)
 
 
-##Technology Used
+## Technology Used
 
 * HTML
 * CSS
 * Javascript
 * JQuery
 
-##APIs Used
+## APIs Used
 
 USDA.gov 
 
-##Authors
+## Authors
 
 Angela Miklos - front-end development
