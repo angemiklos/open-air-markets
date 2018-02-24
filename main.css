@@ -5,7 +5,12 @@
 	padding: 5px;
   }
 
-/* navigation bar at top */
+h1, h2, h3 {
+  font-family: 'Supermercado+One', cursive, sans-serif;
+  font-weight: bold;
+}
+
+/* navigation style elements */
 .nav-bar {
   position: fixed;
   top: 0;
@@ -17,7 +22,7 @@
   font-size: 18px;
   padding: 0 6px;
   background-color: lightgreen;
-  box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
   display: block;
   line-height: 2;
 }
@@ -26,7 +31,7 @@
 	text-decoration: underline;
 }
 
-/* The image banner across the page */
+/* banner style elements */
 .js-banner {
   background: url('https://www.visitsarasota.com/sites/default/master/files/FarmersMarketGoodShot__FallInSarasota__2017Opt.jpg');
   background-repeat: no-repeat;
@@ -37,8 +42,8 @@
   margin : 5px auto;
 }
 
-/* the search elements */
-.js-search {
+/* search style elements */
+.search-line {
 	text-align: center;
 }
 
@@ -61,8 +66,11 @@ fieldset {
 	padding-right : 10px;
 }
 
-span {
-	padding-left : 10px;
+#zipcode {
+  display: inline-block;
+  height: 30px; 
+  border-radius: 3px;
+  margin-right: 10px;
 }
 
 .search-button {
@@ -81,24 +89,6 @@ span {
 	filter: invert(60%);
 }
 
-#zipcode {
-  display: inline-block;
- /* text-align: center;
-  font-weight: 500;
-  line-height: 30px; */
-  height: 30px; 
-  border-radius: 3px;
-  margin-right: 10px;
-}
-
-.search-line {
-	text-align: center;
-}
-
-.js-search-filter {
-	padding-top: 0 10px 10px 10px;
-}
-
 .js-error {
 	border : 1px solid red;
 }
@@ -110,6 +100,11 @@ span {
 	padding-left: 5px;
 }
 
+/* filter style elements */
+.js-search-filter {
+	padding-top: 0 10px 10px 10px;
+}
+
 .js-list-title {
 	display: inline-block;
     font-size: 18px;
@@ -117,6 +112,39 @@ span {
     margin-bottom: 8px;
 }
 
+#CheckBoxes {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+span {
+	padding-left : 10px;
+}
+
+.box {
+	margin-top: 5px;
+} 
+
+/* markets list elements */
+.js-cards-name {
+	font : bold 12px 'Supermercado+One', cursive, sans-serif;
+}
+
+.js-cards-dist .js-note {
+	font : 8px 'Supermercado+One', cursive, sans-serif;
+}
+
+.js-cards:hover {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+	cursor: pointer;
+}
+
+.js-footer {
+	display: block;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+/* detailed markets elements */
 .js-fm-text {
   text-align: center;
 }
@@ -126,46 +154,10 @@ h3.js-schedule {
     font-size: 14px;
 }
 
-.js-cards-name {
-	font : bold 12px 'Supermercado+One', cursive, sans-serif;
-}
-
-.js-cards-dist .js-note {
-	font : 8px 'Supermercado+One', cursive, sans-serif;
-}
-
-.box {
-	margin-top: 5px;
-} 
-
-.js-cards:hover {
-	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
-	cursor: pointer;
-}
-
-#CheckBoxes {
-	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
-}
-
-.CardBoxes {
-	/* box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19); 
-	min-height: 100px; */
-}
-
-.js-address, .js-hours {
-	/* box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19); 
-	min-height: 300px; */
-}
-
 .js-cards, .js-cards-product {
 	margin: 5px;
 	padding: 10px;
 	background-color: lightgreen;
 }
 
-.js-footer {
-	display: block;
-	margin: 0 auto;
-	padding: 15px;
-}
 

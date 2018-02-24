@@ -9,7 +9,6 @@
  *   60px columns (12)
  *   20px gutters (two half-gutters + 11 full gutters, so 12 total)
  *
- *
  *   For smaller screens, we always want 20px of padding on either side,
  *   so 960 + 20 + 20 => 1000px
  *
@@ -33,6 +32,25 @@
   clear: both;
 }
 
+.col-3, .col-4, .col-6, .col-12 {
+  float: left;
+
+  /* Gutters:
+   * Each column is padded by half-a-gutter on each side,
+   * and a quarter gutter top and bottom
+   *
+   * Half a gutter is 10px, 10/960 (context) = 1.041666%
+   *
+   */
+  padding-left: 1.04166666%;
+  padding-right: 1.04166666%;
+}
+
+/* Mobile defaults */
+.col-3, .col-4, .col-6, .col-12 {
+  width: 100%;
+}
+
 h1 {
   font-size: 32px;
 }
@@ -45,12 +63,6 @@ h3 {
   font-size: 20px;
 }
 
-h1, h2, h3 {
-  font-family: 'Supermercado+One', cursive, sans-serif;
-  font-weight: bold;
-}
-
-/* text displayed on top of the image */
 .js-banner-text {
   text-align: center;
   position: absolute;
@@ -72,31 +84,12 @@ h1, h2, h3 {
   top: 2px;
 }
 
-.js-banner {
-  height : 45vh;
-}
-
-.col-3, .col-4, .col-6, .col-12 {
-  float: left;
-
-  /* Gutters:
-   * Each column is padded by half-a-gutter on each side,
-   * and a quarter gutter top and bottom
-   *
-   * Half a gutter is 10px, 10/960 (context) = 1.041666%
-   *
-   */
-  padding-left: 1.04166666%;
-  padding-right: 1.04166666%;
-}
-
-/* Mobile defaults */
-.col-3, .col-4, .col-6, .col-12 {
-  width: 100%;
-}
-
 .js-main-header {
   padding-top: 40px;
+}
+
+.js-banner {
+  height : 45vh;
 }
 
 /* Non-mobile, grid */
@@ -104,22 +97,22 @@ h1, h2, h3 {
   /* 3 columns, 3/12 in % */
   .col-3 {
     width: 25%;
-    padding-top: 1.04166666%;
-    padding-bottom: 1.04166666%;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
   /* 4 columns, 4/12 in % */
   .col-4 {
     width: 33.333333%;
-    padding-top: 1.04166666%;
-    padding-bottom: 1.04166666%;
+    padding-top: 1%;
+    padding-bottom: 1%;
   }
 
   /* 6 columns, 6/12 in % */
   .col-6 {
     width: 50%;
-    padding-top: 1.04166666%;
-    padding-bottom: 1.04166666%;
+    padding-top: 1%;
+    padding-bottom: 1%;
   }
 
   /* 12 columns, 12/12 in % */

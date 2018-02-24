@@ -1,11 +1,9 @@
 __Open Air Markets__ 
 ====================
 
-
 Welcome. May your day be full of sunshine, fresh air and healthy products! 
 
-General Concept
----------------
+## General Concept
 
 Open Air Markets provides a place where the user can find a farmers market
 close to them and know whether they will be selling the product or 
@@ -14,8 +12,8 @@ products they are looking for.
 Future updates hope to include more accurate information and
 product and vendor detail, recipes and intelligent links to concepts, ideas and uses for the market products the user intends to buy.
 
-Capabilities
-------------
+## Capabilities
+
 ### Initial Home screen
 
 ![Home Screen](screenshots/HomeNoZip.JPG)
@@ -71,7 +69,6 @@ user is provided with the following:
 ### Facebook Link
 
 ![Facebook Screen](screenshots/GSGMFacebookLink.JPG)
-
 
 ## Technology Used
 
